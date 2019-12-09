@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>H5围棋</title>
+    <link rel="stylesheet" href="reset.css">
+</head>
+
+<body>
+    <div id="box"></div>
+    <div id="modal-bar">
+        <input type="button" value="纯展示模式" id="showOnly">
+        <input type="button" value="单人对弈模式" id="playSelf">
+        <input type="button" value="摆棋模式" id="setQuestion">
+    </div>
+    <div id="button-bar">
+        <input type="button" value="悔棋" id="reback">
+        <input type="button" value="前进" id="progress1">
+        <input type="button" value="前进5步" id="progress5">
+        <input type="button" value="前进到头" id="progressEnd">
+        <input type="button" value="后退" id="back1">
+        <input type="button" value="后退5步" id="back5">
+        <input type="button" value="后退到头" id="backStart">
+        <input type="button" value="试下" id="tryDown">
+        <input type="button" value="结束试下" id="tryStop">
+    </div>
+</body>
+<script src="./chess.js"></script>
+<script>
+    let chess = new Chess({
+        data: {
+            tableLine: 19,
+            first: "white",
+            sorted: [3],
+            unsorted_black: [1],
+            unsorted_white: [2],
+            modal: "playSelf"
+        },
+        canvas: {
+            auto: true,
+            el: "#box",
+            width: 500,
+            index: 0,
+            orderShow: true
+            //clickFun定义请勿使用箭头函数,否则this指向window
+            // clickFun(e) {
+            //   console.log(e.target, this);
+            // }
+        },
+        created() {
+            showOnly.addEventListener('click', () => {
+                this.modal = 'showOnly'
+            })
+            playSelf.addEventListener('click', () => {
+                this.modal = 'playSelf'
+            })
+            setQuestion.addEventListener('click', () => {
+                this.modal = 'setQuestion'
+            })
+            reback.addEventListener('click', () => {
+                Chess.playModal.pvp_pop.call(this)
+            })
+            back1.addEventListener('click', () => {
+                let n = Chess.middle.replay_index === null ? (chess.sorted.length - 2) : (Chess.middle.replay_index - 1)
+                let exist = Chess.playModal.replay.call(this, n, Chess.middle.replay_index, Chess.middle.replay_exist)
+            })
+            back5.addEventListener('click', () => {
+                let n = Chess.middle.replay_index === null ? (chess.sorted.length - 6) : (Chess.middle.replay_index - 5)
+                Chess.playModal.replay.call(this, n, Chess.middle.replay_index, Chess.middle.replay_exist)
+            })
+            backStart.addEventListener('click', () => {
+                Chess.playModal.replay.call(this, 0, Chess.middle.replay_index, Chess.middle.replay_exist)
+            })
+            progress1.addEventListener('click', () => {
+                if (Chess.middle.replay_index === null) { return }
+
+                Chess.playModal.replay.call(this, Chess.middle.replay_index + 1, Chess.middle.replay_index, Chess.middle.replay_exist)
+            })
+            progress5.addEventListener('click', () => {
+                if (Chess.middle.replay_index === null) { return }
+
+                Chess.playModal.replay.call(this, Chess.middle.replay_index + 5, Chess.middle.replay_index, Chess.middle.replay_exist)
+            })
+            progressEnd.addEventListener('click', () => {
+                if (Chess.middle.replay_index === null) { return }
+                Chess.playModal.replay.call(this, this.sorted.length - 1, Chess.middle.replay_index, Chess.middle.replay_exist)
+            });
+            // tryDown.addEventListener('click', () => {
+            //     Chess.playModal.try_start.call(this,)
+            // })
+            // tryStop.addEventListener('click', () => {
+            //     Chess.playModal.try_end.call(this)
+            // })
+        }
+    });
+
+</script>
+
+</html>
