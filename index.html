@@ -5,25 +5,156 @@
     <meta charset="UTF-8">
     <title>H5围棋</title>
     <link rel="stylesheet" href="reset.css">
+    <style>
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, p, blockquote, a, cite, img, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    border: 0;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    vertical-align: baseline;
+}
+html,body{
+    height:100%
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+button {
+    outline: none;
+}
+ol, ul {
+    margin: 0;
+    padding: 0;
+}
+ol, ul, li {
+    list-style: none;
+}
+i, em {
+    font-style: normal;
+}
+blockquote {
+    quotes: none;
+}
+blockquote:before, blockquote:after {
+    content: '';
+    content: none;
+}
+a {
+    outline: none;
+    text-decoration: none;
+    text-decoration:none;
+    text-decoration: none;
+    transition: background-color .5s ease 0s,color .5s ease 0s,width .5s ease 0s,border-width .5s ease 0s,border-color .5s ease 0s;
+    -webkit-transition: background-color .5s ease 0s,color .5s ease 0s,width .5s ease 0s,border-width .5s ease 0s,border-color .5s ease 0s;
+    -moz-transition: background-color .5s ease 0s,color .5s ease 0s,width .5s ease 0s,border-width .5s ease 0s,border-color .5s ease 0s;
+    -ms-transition: background-color .5s ease 0s,color .5s ease 0s,width .5s ease 0s,border-width .5s ease 0s,border-color .5s ease 0s;
+    -o-transition: background-color .5s ease 0s,color .5s ease 0s,width .5s ease 0s,border-width .5s ease 0s,border-color .5s ease 0s
+}
+input, textarea{
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    outline: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+select, option{
+    font-family: inherit;
+}
+.noselect{
+    -webkit-user-select: none;
+    user-select: none;
+}
+.clear {
+    clear: both;
+}
+.clearfix:before,.clearfix:after{
+    content:"";
+    display:table;
+}
+.clearfix:after{
+    clear:both;
+}
+.clearfix{
+    *zoom:1;
+}
+
+    </style>
+    <style>
+/* BTN TWO */
+
+#modal-bar{
+    margin-left: 20px;
+    margin-top: 10px;
+}
+#modal-bar a:hover{
+    cursor: pointer;
+    color: rgb(14, 189, 189);
+}
+#button-bar{
+    margin-left: 20px;
+    margin-top: 10px;
+}
+#button-bar a:hover{
+    cursor: pointer;
+    color: rgb(189, 64, 14);
+}
+#button-bar a:active{
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+}
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#modal-bar{
+    /* width: 500px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#modal-bar a{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+#button-bar{
+    /* width: 500px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#button-bar a{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+    </style>
 </head>
 
 <body>
-    <div id="box"></div>
-    <div id="modal-bar">
-        <input type="button" value="纯展示模式" id="showOnly">
-        <input type="button" value="单人对弈模式" id="playSelf">
-        <input type="button" value="摆棋模式" id="setQuestion">
-    </div>
-    <div id="button-bar">
-        <input type="button" value="悔棋" id="reback">
-        <input type="button" value="前进" id="progress1">
-        <input type="button" value="前进5步" id="progress5">
-        <input type="button" value="前进到头" id="progressEnd">
-        <input type="button" value="后退" id="back1">
-        <input type="button" value="后退5步" id="back5">
-        <input type="button" value="后退到头" id="backStart">
-        <input type="button" value="试下" id="tryDown">
-        <input type="button" value="结束试下" id="tryStop">
+    <div class="content">
+        <div id="box"></div>
+    
+        </div>
+        <div id="modal-bar">
+            <a type="button" value="" id="showOnly">纯展示模式</a>
+            <a type="button" value="" id="playSelf">单人对弈模式</a>
+            <a type="button" value="" id="setQuestion">摆棋模式</a>
+        </div>
+        <div id="button-bar">
+            <a type="button" value="" id="reback">悔棋</a>
+            <a type="button" value="" id="progress1">前进</a>
+            <a type="button" value="" id="progress5">前进5步</a>
+            <a type="button" value="" id="progressEnd">前进到头</a>
+            <a type="button" value="" id="back1">后退</a>
+            <a type="button" value="" id="back5">后退5步</a>
+            <a type="button" value="" id="backStart">后退到头</a>
+            <a type="button" value="" id="tryDown">试下</a>
+            <a type="button" value="" id="tryStop">结束试下</a>
+        </div>
+
     </div>
 </body>
 <script src="./chess.js"></script>
@@ -31,10 +162,10 @@
     let chess = new Chess({
         data: {
             tableLine: 19,
-            first: "white",
-            sorted: [3],
-            unsorted_black: [1],
-            unsorted_white: [2],
+            first: "black",
+            // sorted: [3],
+            // unsorted_black: [1],
+            // unsorted_white: [2],
             modal: "playSelf"
         },
         canvas: {
